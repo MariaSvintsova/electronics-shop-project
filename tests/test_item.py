@@ -11,6 +11,9 @@ def test_calculate_total_price():
 
 def test_apply_discount():
     item = Item(name="Смартфон", price=10000, quantity=20)
+
+    item.pay_rate = 0.8
+
     item.apply_discount()
 
     assert item.price == 8000.0
