@@ -25,6 +25,17 @@ def test_all_items():
     assert Item.all[2:] == [item1, item2]
 
 
+def test_instantiate_from_csv():
+    list_of_items = Item.instantiate_from_csv('../src/items.csv')
 
+    assert all(isinstance(item, Item) for item in list_of_items)
+    assert len(list_of_items) == 5
+
+
+def test_string_to_number():
+    numberstring = '10.0'
+    int_number = Item.string_to_number(numberstring)
+
+    assert int_number == 10
 
 
