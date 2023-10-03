@@ -26,10 +26,10 @@ def test_all_items():
 
 
 def test_instantiate_from_csv():
-    list_of_items = Item.instantiate_from_csv('../src/items.csv')
+    Item.instantiate_from_csv('../src/items.csv')
 
-    assert all(isinstance(item, Item) for item in list_of_items)
-    assert len(list_of_items) == 5
+    assert all(isinstance(item, Item) for item in Item.all)
+    assert len(Item.all) == 5
 
 
 def test_string_to_number():

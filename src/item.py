@@ -49,24 +49,19 @@ class Item:
         else:
             self.__name = name[:10]
 
+
     @classmethod
-    def instantiate_from_csv(cls, filename) -> list:
+    def instantiate_from_csv(cls, filename) -> None:
         """
         Класс-метод инициализирует экземпляры класса Item из файла src/items.csv
 
-        :return: список объектов Item.
         """
-        items = []
-        with open(filename, encoding='cp1251') as csvfile:
+        # Очищение списка all перед наполнением экземплярами из файла
+        cls.all = []
+        with open(filename, encoding='utf-8') as csvfile:
             all_lines = csv.DictReader(csvfile)
             for row in all_lines:
-                name = row['name']
-                price = float(row['price'])
-                quantity = int(row['quantity'])
-                item = cls(name, price, quantity)
-                items.append(item)
-        return items
-
+                cls(row['name'], float(row['price']), int(row['quantity']))
 
     @staticmethod
     def string_to_number(stringnumber) -> int:
