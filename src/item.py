@@ -21,6 +21,18 @@ class Item:
         self.quantity = quantity
         self.all.append(self)
 
+
+
+    def __repr__(self):
+        return f"{self.__class__.__name__}('{self.name}', {self.price}, {self.quantity})"
+
+
+
+    def __str__(self):
+        return self.name
+
+
+
     def calculate_total_price(self) -> float:
         """
         Рассчитывает общую стоимость конкретного товара в магазине.
@@ -28,6 +40,8 @@ class Item:
         :return: Общая стоимость товара.
         """
         return self.price * self.quantity
+
+
 
     def apply_discount(self) -> None:
         """
@@ -38,9 +52,11 @@ class Item:
         self.price *= self.pay_rate
 
 
+
     @property
     def name(self):
         return self.__name
+
 
     @name.setter
     def name(self, name):
@@ -48,6 +64,7 @@ class Item:
             self.__name = name
         else:
             self.__name = name[:10]
+
 
 
     @classmethod
@@ -62,6 +79,8 @@ class Item:
             all_lines = csv.DictReader(csvfile)
             for row in all_lines:
                 cls(row['name'], float(row['price']), int(row['quantity']))
+
+
 
     @staticmethod
     def string_to_number(stringnumber) -> int:

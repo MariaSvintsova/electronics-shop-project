@@ -39,3 +39,12 @@ def test_string_to_number():
     assert int_number == 10
 
 
+def test__repr__():
+    RPhone = Item(name="RPhone", price=3000000, quantity=3)
+
+    assert repr(RPhone) == "Item('RPhone', 3000000, 3)"
+
+def test__str__():
+    Phone = Item(name="GPhone", price=5000000000, quantity=1)
+
+    assert str(Phone) == "GPhone"
