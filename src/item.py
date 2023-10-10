@@ -1,6 +1,7 @@
 import csv
 
 
+
 class Item:
     """
     Класс для представления товара в магазине.
@@ -8,7 +9,7 @@ class Item:
     pay_rate = 1.0
     all = []
 
-    def __init__(self, name: str, price: float, quantity: int) -> None:
+    def __init__(self, name: str, price: float, quantity: float) -> None:
         """
         Создание экземпляра класса item.
 
@@ -31,7 +32,13 @@ class Item:
     def __str__(self):
         return self.name
 
-
+    def __add__(self, other):
+        from src.phone import Phone
+        if isinstance(self.__class__, Item.__class__):
+            return self.quantity + other.quantity
+        elif isinstance(self.__class__, Phone.__class__):
+            return self.quantity + other.quantity
+        raise TypeError("Нельзя сложить Phone или Item с экземплярами не Phone или Item классов.")
 
     def calculate_total_price(self) -> float:
         """
