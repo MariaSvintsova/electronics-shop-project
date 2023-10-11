@@ -2,6 +2,7 @@
 import pytest
 
 from src.item import Item
+from src.phone import Phone
 
 
 def test_calculate_total_price():
@@ -44,7 +45,36 @@ def test__repr__():
 
     assert repr(RPhone) == "Item('RPhone', 3000000, 3)"
 
+
 def test__str__():
     Phone = Item(name="GPhone", price=5000000000, quantity=1)
 
     assert str(Phone) == "GPhone"
+
+def test__magic_methods_Phoneclass__():
+    your_phone = Phone("iPhone 14 pro max", 140000, 8, 4)
+
+    assert str(your_phone) == 'iPhone 14 pro max'
+    assert repr(your_phone) == "Phone('iPhone 14 pro max', 140000, 8, 4)"
+
+def test__add__():
+    item = Item("Gphone", 100000, 11)
+    your_phone = Phone("iPhone 14 pro max", 140000, 8, 4)
+
+    assert item + your_phone == 19
+    assert your_phone + your_phone == 16
+    assert item + item == 22
+    assert your_phone + item == 19
+
+def test_number_of_sim():
+    your_phone = Phone("iPhone 14 pro max", 140000, 8, 4)
+
+    with pytest.raises(ValueError) as exinfo:
+        your_phone.number_of_sim = 0
+
+    assert str(exinfo.value) == "Количество физических SIM-карт должно быть целым числом больше нуля."
+
+
+
+
+
