@@ -2,6 +2,7 @@
 import pytest
 
 from src.item import Item
+from src.keyboard import Keyboard
 from src.phone import Phone
 
 
@@ -73,6 +74,20 @@ def test_number_of_sim():
         your_phone.number_of_sim = 0
 
     assert str(exinfo.value) == "Количество физических SIM-карт должно быть целым числом больше нуля."
+
+def test_keyboard_str():
+    keyboard = Keyboard("Klaviatura", 3333, 9)
+
+    assert str(keyboard) == "Klaviatura"
+    assert keyboard.language
+
+def test_change_language():
+    keyboard = Keyboard("Klaviatura", 3333, 9)
+
+    assert keyboard.language == "EN"
+    keyboard.change_lang()
+    assert keyboard.language == "RU"
+
 
 
 
