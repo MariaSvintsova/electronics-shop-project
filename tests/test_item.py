@@ -3,6 +3,7 @@ import pytest
 
 from src.item import Item
 from src.keyboard import Keyboard
+from src.my_exception import InstantiateCSVError
 from src.phone import Phone
 
 
@@ -88,8 +89,14 @@ def test_change_language():
     keyboard.change_lang()
     assert keyboard.language == "RU"
 
+def test_absent_file():
+    with pytest.raises(FileNotFoundError):
+        Item.instantiate_from_csv()
 
 
+def test_exception():
+    with pytest.raises(InstantiateCSVError):
+        Item.instantiate_from_csv('../src/items.csv')
 
 
 

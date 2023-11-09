@@ -1,5 +1,6 @@
 import csv
-
+from typing import Optional
+from src.my_exception import InstantiateCSVError
 
 
 class Item:
@@ -44,7 +45,7 @@ class Item:
         """
         Рассчитывает общую стоимость конкретного товара в магазине.
 
-        :return: Общая стоимость товара.
+        :return: Общая стоимость товара!
         """
         return self.price * self.quantity
 
@@ -74,18 +75,18 @@ class Item:
 
 
 
-    @classmethod
-    def instantiate_from_csv(cls, filename) -> None:
-        """
-        Класс-метод инициализирует экземпляры класса Item из файла src/items.csv
-
-        """
-        # Очищение списка all перед наполнением экземплярами из файла
-        cls.all = []
-        with open(filename, encoding='utf-8') as csvfile:
-            all_lines = csv.DictReader(csvfile)
-            for row in all_lines:
-                cls(row['name'], float(row['price']), int(row['quantity']))
+    # @classmethod
+    # def instantiate_from_csv(cls, filename) -> None:
+    #     """
+    #     Класс-метод инициализирует экземпляры класса Item из файла src/items.csv
+    #
+    #     """
+    #     # Очищение списка all перед наполнением экземплярами из файла
+    #     cls.all = []
+    #     with open(filename, encoding='utf-8') as csvfile:
+    #         all_lines = csv.DictReader(csvfile)
+    #         for row in all_lines:
+    #             cls(row['name'], float(row['price']), int(row['quantity']))
 
 
 
@@ -98,9 +99,34 @@ class Item:
         """
         return int(float(stringnumber))
 
+    @classmethod
+    def instantiate_from_csv(cls, path_tofile="") -> Optional[str]:
+        """
+        Класс-метод инициализирует экземпляры класса Item из файла src/items.csv
+
+        """
+        # Очищение списка all перед наполнением экземплярами из файла
+        cls.all = []
+        try:
+            with open(path_tofile, newline='', encoding='cp1251') as opened_file:
+                info_fromfile = csv.DictReader(opened_file)
+                for row in info_fromfile:
+                    try:
+                        if row["name"] is None or row["price"] is None or row["quantity"] is None:
+                            raise InstantiateCSVError()
+                        else:
+                            cls(row["name"], row["price"], row["quantity"])
+                    except Exception:
+                        raise InstantiateCSVError()
+        except FileNotFoundError:
+            raise FileNotFoundError("Отсутствует файл item.csv")
+        except InstantiateCSVError as e:
+            raise e
 
 
 
+if __name__ == "__main__":
+    test = Item.instantiate_from_csv('./items.csv')
 
 
 
